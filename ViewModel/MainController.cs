@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -63,7 +64,6 @@ namespace ExcelRedactor.ViewModel
 					{
 						Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
 					};
-					TableData.Clear();
 					if (OpFile.ShowDialog() == true)
 					{
 						FileInfo NewFile = new FileInfo(OpFile.FileName);
@@ -158,8 +158,8 @@ namespace ExcelRedactor.ViewModel
                 {
 					if (SelectedTableR == null)
 						return;
-					TableData.Remove(SelectedTableR);
-					SelectedTableR = null;
+                    TableData.Remove(SelectedTableR);
+					SelectedTableR = null; 
                 });
             }
         }
@@ -171,18 +171,65 @@ namespace ExcelRedactor.ViewModel
             {
                 return _AddCollumWindow ?? new RelayCommand(obj =>
                 {
-                    DataWorker.AddNewColl(new TableCell("", ""), TableData);
-					changeGridView();
+                    DataWorker.AddNewColl(new TableCell($"{TableData[0].Cells.Count}", ""), TableData);
+                    changeGridView();
+                });
+            }
+        }
+        
+        private RelayCommand _SaveTable;
+        public RelayCommand SaveTable
+        {
+            get
+            {
+                return _SaveTable ?? new RelayCommand(obj =>
+                {
+                    ExcelPackage pck;
+                    if (TableData == null || TableData.Count == 0 || FileName == null)
+                    {
+						MessageBox.Show("File Not Found");
+					}
+                    pck = new ExcelPackage(FileName);
+                    ExcelWorksheet table = pck.Workbook.Worksheets[0];
+                    int i = 1;
+                    int j = 1;
+                    foreach (var item in TableData[0].Cells)
+                        pck.Workbook.Worksheets[0].Cells[1, j++].Value = item.Name;
+                    i++;
+                    foreach (var rows in TableData)
+                    {
+                        j = 1;
+                        foreach (var item in rows.Cells)
+                        {
+                            pck.Workbook.Worksheets[0].Cells[i, j++].Value = item.Value;
+                        }
+                        i++;
+                    }
+                    pck.Save();
+                    MessageBox.Show("Save Finish");
+                });
+            }
+        }
+
+        private RelayCommand _CloseTable;
+        public RelayCommand CloseTable
+        {
+            get
+            {
+                return _CloseTable ?? new RelayCommand(obj =>
+                {
+                    ((MainWindow)obj).Close();
                 });
             }
         }
         #endregion
         // Command/>
-
-        // </action
+        #region ACTIONS
+        // </actions
         private void cleanTableData()
 		{
 			TableData.Clear();
+            TableR.size = 0;
 			TableData = new ObservableCollection<TableR>();
 		}
 
@@ -202,10 +249,11 @@ namespace ExcelRedactor.ViewModel
 
 				grid.Columns.Add(new DataGridTextColumn() { Header = column.Name, Binding = binding });
 			}
+			TableR.size = columns.Length;
 			grid.ItemsSource = TableData;
 		}
-
-        // action/>
+        #endregion
+        // actions/>
         public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "")
 		{

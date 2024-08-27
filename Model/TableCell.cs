@@ -21,6 +21,7 @@ namespace ExcelRedactor.Model
                 OnPropertyChanged("Name");
             }
         }
+
         private object _value;
         public object Value
         {
