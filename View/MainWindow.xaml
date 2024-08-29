@@ -7,13 +7,10 @@
         xmlns:Context="clr-namespace:ExcelRedactor.ViewModel"
         xmlns:Converter="clr-namespace:ExcelRedactor.Model"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None">
     <Window.DataContext>
         <Context:MainController/>
     </Window.DataContext>
-    <Window.Resources>
-        <Converter:CellConverter x:Key="ColorConverter"/>
-    </Window.Resources>
     <Grid Margin="0,0,0,-6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="191*"/>
@@ -22,42 +19,11 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="Import_Excel" Content="Import_Excel" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top" Width="100" Height="20" Command="{Binding ImportExcel}"/>
         <Button x:Name="Export_Excel" Content="Export_Excel" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="100" Height="20" Command="{Binding ExportExcel}"/>
-        <Button x:Name="Remove" Content="Remove" HorizontalAlignment="Left" Margin="332,10,0,0" VerticalAlignment="Top" Width="70" Grid.Column="1" Height="20" Command="{Binding RemoveItem}"/>
-        <Button x:Name="Copy" Content="Copy" HorizontalAlignment="Left" Margin="244,10,0,0" VerticalAlignment="Top" Width="70" Grid.Column="1" Height="20" Command="{Binding CopyItem}"/>
-        <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="158,10,0,0" VerticalAlignment="Top" Width="70" Grid.Column="1" Height="20" Command="{Binding AddCollumWindow}"/>
-        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="244,371,0,0" VerticalAlignment="Top" Height="33" Width="100" Grid.Column="1" Command="{Binding CloseTable}" CommandParameter="{Binding ElementName=MainWnd}"/>
-        <Button x:Name="Save" HorizontalAlignment="Left" Margin="108,370,0,0" VerticalAlignment="Top" Height="34" Width="100" Grid.Column="1" Content="Save" Command="{Binding SaveTable}" />
-        <DataGrid x:Name="grid_data" SelectedItem="{Binding SelectedTableR}" ItemsSource="{Binding TableData}" Grid.ColumnSpan="2" Margin="0,35,0,76" AutoGenerateColumns="False">
-        </DataGrid>
-        <ContentControl x:Name="AddContent" HorizontalAlignment="Left" Margin="174,127,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="168" Width="416" Visibility="Hidden">
-            <Grid Background="#FFDFC5C5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="51*"/>
-                    <ColumnDefinition Width="29*"/>
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="int1" HorizontalAlignment="Left" Margin="45,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10"/>
-                <TextBox x:Name="int2" HorizontalAlignment="Left" Margin="45,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10"/>
-                <TextBox x:Name="int3" HorizontalAlignment="Left" Margin="45,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10"/>
-                <TextBox x:Name="int4" HorizontalAlignment="Left" Margin="45,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10"/>
-                <TextBox x:Name="int5" HorizontalAlignment="Left" Margin="45,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10"/>
-                <Label Content="int1*" HorizontalAlignment="Left" Margin="0,21,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="int2*" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="int3*" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="int4*" HorizontalAlignment="Left" Margin="0,67,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="int5*" HorizontalAlignment="Left" Margin="0,113,0,0" VerticalAlignment="Top" Height="24"/>
-                <TextBox x:Name="Calculate1" HorizontalAlignment="Left" Margin="0,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10" Grid.Column="1"/>
-                <TextBox x:Name="Calculate2" HorizontalAlignment="Left" Margin="0,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10" Grid.Column="1"/>
-                <TextBox x:Name="Calculate3" HorizontalAlignment="Left" Margin="0,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10" Grid.Column="1"/>
-                <TextBox x:Name="Calculate4" HorizontalAlignment="Left" Margin="0,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10" Grid.Column="1"/>
-                <TextBox x:Name="Calculate5" HorizontalAlignment="Left" Margin="0,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" UndoLimit="10" Grid.Column="1"/>
-                <Label Content="Calculate1" HorizontalAlignment="Left" Margin="180,21,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="Calculate2" HorizontalAlignment="Left" Margin="180,44,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="Calculate3" HorizontalAlignment="Left" Margin="180,90,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="Calculate4" HorizontalAlignment="Left" Margin="180,67,0,0" VerticalAlignment="Top" Height="24"/>
-                <Label Content="Calculate5" HorizontalAlignment="Left" Margin="180,113,0,0" VerticalAlignment="Top" Height="24"/>
-                <Button x:Name="btn_save_add" Content="Save" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Width="85" Height="24"/>
-                <Button x:Name="btn_cancel_add" Content="Cancel" HorizontalAlignment="Left" Margin="208,142,0,2" Width="85" Grid.ColumnSpan="2" AutomationProperties.IsColumnHeader="True"/>
-            </Grid>
-        </ContentControl>
+        <Button x:Name="Remove" Content="Remove" Margin="332,0,0,410" VerticalAlignment="Bottom" Grid.Column="1" Height="20" Command="{Binding RemoveItem}" HorizontalAlignment="Left" Width="70"/>
+        <Button x:Name="Copy" Content="Copy" Margin="244,0,0,410" VerticalAlignment="Bottom" Grid.Column="1" Height="20" Command="{Binding CopyItem}" HorizontalAlignment="Left" Width="70"/>
+        <Button x:Name="Add" Content="Add" Margin="158,0,0,410" VerticalAlignment="Bottom" Grid.Column="1" Height="20" Command="{Binding AddItem}" HorizontalAlignment="Left" Width="70"/>
+        <Button x:Name="Cancel" Content="Cancel" Margin="244,371,0,0" Grid.Column="1" Command="{Binding CloseTable}" CommandParameter="{Binding ElementName=MainWnd}" HorizontalAlignment="Left" Width="100" Height="33" VerticalAlignment="Top"/>
+        <Button x:Name="Save" Margin="108,370,0,0" Grid.Column="1" Content="Save" Command="{Binding SaveTable}" Height="34" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" UseLayoutRounding="False" />
+        <DataGrid x:Name="grid_data" SelectedItem="{Binding SelectedTableR}" CanUserAddRows="False" ItemsSource="{Binding TableData}" Grid.ColumnSpan="2" Margin="0,35,0,76" AutoGenerateColumns="False"/>
     </Grid>
 </Window>

@@ -11,7 +11,12 @@ namespace ExcelRedactor.Model
 {
     public class TableR : INotifyPropertyChanged
     {
-        public static int size = 0;
+        private int _ID;
+        public int ID
+        {
+            get => _ID;
+            set => _ID = value;
+        }
         private ObservableCollection<TableCell> _cells = new ObservableCollection<TableCell>();
 
         public ObservableCollection<TableCell> Cells
@@ -22,27 +27,31 @@ namespace ExcelRedactor.Model
                 OnPropertyChanged("Cells");
             }
         }
-        public TableR(params TableCell[] properties) : this()
+        public TableR(int ID, params TableCell[] properties)
         {
+            this.ID = ID;
             foreach (var property in properties)
                 Cells.Add(property);
         }
 
-        public TableR(TableR copy) : this()
+        public TableR(int ID, TableR copy)
         {
+            this.ID = ID;
             foreach (var item in copy.Cells)
                 _cells.Add(new TableCell(item));
         }
-        public TableR()
+
+        public TableR(int ID)
         {
-            for (int i = 0; i < size; i++)
-                _cells.Add(new TableCell("", ""));
+            this.ID = ID;
+            _cells.Add(new TableCell("ID", ID, 0));
         }
 
         public void AddCell(TableCell cell)
         {
             _cells.Add(cell);
         }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

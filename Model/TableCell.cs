@@ -11,6 +11,12 @@ namespace ExcelRedactor.Model
 {
     public class TableCell : INotifyPropertyChanged
     {
+        private int _ID;
+        public int ID
+        {
+            get => _ID;
+            set => _ID = value;
+        }
         private string _name;
         public string Name
         {
@@ -33,16 +39,18 @@ namespace ExcelRedactor.Model
             }
         }
 
-        public TableCell(string name, object value)
+        public TableCell(string name, object value, int _id)
         {
             Name = name;
             Value = value;
+            ID = _id;
         }
 
         public TableCell(TableCell copy)
         {
             Name = copy.Name;
             Value = copy.Value;
+            ID = copy.ID;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
